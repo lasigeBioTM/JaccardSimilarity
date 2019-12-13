@@ -7,7 +7,6 @@ IFS='\n'
 # ./jaccard.sh "2841,1324" "1324,1323" doid.obo 
 # ./jaccard.sh "2841,1324" "1324,1323" doid.obo 2
 
-
 S1=$1 # input set of terms 
 S2=$2 # input set of terms
 
@@ -39,7 +38,7 @@ ancestors () {
     A=$S # includes the terms themselves 
     AOLD=''
     COUNTER=$MAXANCESTRYLEVEL
-    until [[ $(echo -e $AOLD | wc -l) -eq $(echo -e $A | wc -l) ]] || [[ $COUNTER -eq 0 ]]; do
+    while [[ $(echo -e $AOLD | wc -l) -eq $(echo -e $A | wc -l) ]] || [[ $COUNTER -ne 0 ]]; do
 	P=$(parents $S)
 	AOLD=$A
 	A=$(cat <(echo $AOLD) <(echo $P) | sort -u)
@@ -59,7 +58,7 @@ union () {
 intersection () {
     A1=$1
     A2=$2
-    A=$(grep -w -F -f <(echo $A1) <(echo $A2))
+    A=$(grep -w -F -f <(echo $A1) <(echo $A2) | sort -u)
     echo -e $A
 }
 
@@ -75,6 +74,7 @@ A2=$(ancestors $S2L)
 
 U=$(union $A1 $A2)
 I=$(intersection $A1 $A2)
+
 
 # count the members
 IN=$(cat <(echo $I) | wc -l)
