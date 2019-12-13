@@ -4,7 +4,7 @@ Calculate the Jaccard Similarity Coefficient between two sets of terms based on 
 USAGE
 
 ```shell
-./jaccard.sh <Set1> <Set2> <OBOfile> [max_ancestry_level]'
+./jaccard.sh <Set1> <Set2> <OBOfile> [max_ancestry_level]
 ```
 - ```max_ancestry_level``` is an optional parameter to reduce the number of ancestors used. It defines the maximum number of edges between the terms and the ancestors. 
 
